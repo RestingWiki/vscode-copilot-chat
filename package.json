@@ -2234,15 +2234,23 @@
 						],
 						"markdownDeprecationMessage": "%github.copilot.config.edits.codesearch.enabled%"
 					},
-					"github.copilot.chat.byok.ollamaEndpoint": {
-						"type": "string",
-						"default": "http://localhost:11434",
-						"tags": [
-							"preview"
-						],
-						"markdownDescription": "%github.copilot.config.byok.ollamaEndpoint%"
-					}
-				}
+                                        "github.copilot.chat.byok.ollamaEndpoint": {
+                                                "type": "string",
+                                                "default": "http://localhost:11434",
+                                                "tags": [
+                                                        "preview"
+                                                ],
+                                                "markdownDescription": "%github.copilot.config.byok.ollamaEndpoint%"
+                                        },
+                                        "github.copilot.chat.byok.customOpenAIEndpoint": {
+                                                "type": "string",
+                                                "default": "http://x.x.x/v1",
+                                                "tags": [
+                                                        "preview"
+                                                ],
+                                                "markdownDescription": "%github.copilot.config.byok.customOpenAIEndpoint%"
+                                        }
+                                }
 			},
 			{
 				"title": "Experimental",
