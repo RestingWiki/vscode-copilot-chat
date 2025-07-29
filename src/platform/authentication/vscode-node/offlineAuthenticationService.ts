@@ -31,7 +31,7 @@ export class OfflineAuthenticationService extends BaseAuthenticationService {
 		@IConfigurationService configurationService: IConfigurationService
 	) {
 		super(logService, tokenStore, tokenManager, configurationService);
-		this.tokenProvider = tokenProvider || getStaticGitHubToken;
+		this.tokenProvider = tokenProvider ?? (() => 'dummy_token');
 
 		const that = this;
 		this._anyGitHubSession = {
