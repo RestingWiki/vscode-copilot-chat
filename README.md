@@ -69,6 +69,7 @@ To get the latest security fixes, please use the latest version of the Copilot e
 * **[Feedback](https://github.com/microsoft/vscode-copilot-release/issues)**: We'd love to get your help in making GitHub Copilot better!
 * Configure a custom OpenAI endpoint for Bring Your Own Key using the `github.copilot.chat.byok.customOpenAIEndpoint` setting.
 * For offline use, patch `VSCodeCopilotTokenManager._auth` to return a dummy token so no GitHub authorization is required.
+* When running offline, set the `COPILOT_OFFLINE` environment variable to `1` so the extension uses a dummy GitHub session.
 
 ## Data and telemetry
 

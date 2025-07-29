@@ -8,6 +8,7 @@ import { IAuthenticationService } from '../../../platform/authentication/common/
 import { ICopilotTokenManager } from '../../../platform/authentication/common/copilotTokenManager';
 import { getOrCreateTestingCopilotTokenManager } from '../../../platform/authentication/node/copilotTokenManager';
 import { AuthenticationService } from '../../../platform/authentication/vscode-node/authenticationService';
+import { OfflineAuthenticationService } from '../../../platform/authentication/vscode-node/offlineAuthenticationService';
 import { VSCodeCopilotTokenManager } from '../../../platform/authentication/vscode-node/copilotTokenManager';
 import { IChatAgentService } from '../../../platform/chat/common/chatAgents';
 import { IChatMLFetcher } from '../../../platform/chat/common/chatMLFetcher';
@@ -138,7 +139,11 @@ export function registerServices(builder: IInstantiationServiceBuilder, extensio
 		setupTelemetry(builder, extensionContext, internalAIKey, internalLargeEventAIKey, ariaKey);
 		builder.define(ICopilotTokenManager, new SyncDescriptor(VSCodeCopilotTokenManager));
 	}
-	builder.define(IAuthenticationService, new SyncDescriptor(AuthenticationService));
+	if (process.env.COPILOT_OFFLINE === '1') {
+		builder.define(IAuthenticationService, new SyncDescriptor(OfflineAuthenticationService, [undefined]));
+	} else {
+		builder.define(IAuthenticationService, new SyncDescriptor(AuthenticationService));
+	}
 
 	builder.define(ITestGenInfoStorage, new SyncDescriptor(TestGenInfoStorage)); // Used for test generation (/tests intent)
 	builder.define(IEndpointProvider, new SyncDescriptor(ProductionEndpointProvider, [collectFetcherTelemetry]));
