@@ -58,19 +58,23 @@ export class VSCodeCopilotTokenManager extends BaseCopilotTokenManager {
 	}
 
 	private async _auth(): Promise<TokenInfoOrError> {
-		const session = await getAnyAuthSession(this.configurationService, { silent: true });
-		if (!session) {
-			this._logService.logger.warn('GitHub login failed');
-			this._telemetryService.sendGHTelemetryErrorEvent('auth.github_login_failed');
-			return { kind: 'failure', reason: 'GitHubLoginFailed' };
-		}
-		// Log the steps by default, but only log actual token values when the log level is set to debug.
-		this._logService.logger.info(`Logged in as ${session.account.label}`);
-		const tokenResult = await this.authFromGitHubToken(session.accessToken);
-		if (tokenResult.kind === 'success') {
-			this._logService.logger.info(`Got Copilot token for ${session.account.label}`);
-		}
-		return tokenResult;
+		// Always return a dummy token when running offline to avoid GitHub login
+		return {
+			kind: 'success',
+			token: 'dummy_token;tid=dummytid;dom=localhost;exp=9999999999',
+			expires_at: 9999999999,
+			refresh_in: 3600,
+			username: 'dummy_user',
+			isVscodeTeamMember: false,
+			copilot_plan: 'individual',
+			quota_snapshots: {},
+			quota_reset_date: '',
+			organization_list: [],
+			enterprise_list: [],
+			individual: true,
+			sku: 'free_limited_copilot',
+			chat_enabled: true
+		};
 	}
 
 	private async _authShowWarnings(): Promise<ExtendedTokenInfo> {
